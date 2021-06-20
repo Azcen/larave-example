@@ -38,11 +38,13 @@ class UserRequest extends FormRequest
               return [
                 'name' => 'required|max:191',
                 'email' => 'required|max:191|email|unique:users',
+                'password' => 'required|string|min:6|confirmed',
               ];
             case 'PUT':
               return [
                 'name' => 'required|max:191',
                 'email' => 'required',
+                'password' => 'required|string|min:6|confirmed',
               ];
             case 'DELETE':
               return [

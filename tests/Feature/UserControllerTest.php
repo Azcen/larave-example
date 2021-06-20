@@ -88,6 +88,7 @@ class UserControllerTest extends TestCase
         $this->withoutExceptionHandling();
         $factory = $this->factory;
         $factory['password'] = 'secret';
+        $factory['password_confirmation'] = 'secret';
         $factory['role'] = 'Admin';
         
 
@@ -106,6 +107,7 @@ class UserControllerTest extends TestCase
         $factory['id'] = $json->id;
 
         unset($factory['password']);
+        unset($factory['password_confirmation']);
         unset($factory['email_verified_at']);
         unset($factory['role']);
 
@@ -122,6 +124,9 @@ class UserControllerTest extends TestCase
         $this->withoutExceptionHandling();
 
         $factory = $this->factory;
+        $factory['password'] = 'secret';
+        $factory['password_confirmation'] = 'secret';
+
         $user = User::factory()->create();
         $factory['id'] = $user->id;
 
@@ -134,8 +139,13 @@ class UserControllerTest extends TestCase
                 $factory
             )
             ->assertStatus(200)
-            ->assertHeader('Content-Type', 'application/json')
-            ->assertJson($factory);
+            ->assertHeader('Content-Type', 'application/json');
+
+            unset($factory['password']);
+            unset($factory['password_confirmation']);
+            unset($factory['email_verified_at']);
+            unset($factory['role']);
+            $response->assertJson($factory);
 
         $this->assertDatabaseHas('users', [
             'name' => $factory['name'],
@@ -159,5 +169,32 @@ class UserControllerTest extends TestCase
             ->assertStatus(200);
 
         $this->assertDatabaseMissing('users', [ 'id' => $user->id ]);
+    }
+
+    public function testRegisterUser() 
+    {
+        $this->withoutExceptionHandling();
+
+        $factory = $this->factory;
+        $factory['password'] = 'secret';
+        $factory['password_confirmation'] = 'secret';
+
+        $response = $this->withHeaders([])
+            ->json(
+                'POST',
+                '/api/register/',
+                $factory
+            )
+            ->assertStatus(201);
+        unset($factory['password']);
+        unset($factory['password_confirmation']);
+        unset($factory['email_verified_at']);
+        $response->assertJsonStructure([
+            'user' => [
+                'name',
+                'email',
+            ],
+            'token',
+        ]);
     }
 }
