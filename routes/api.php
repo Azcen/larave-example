@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Resources\ProductController;
+use App\Http\Controllers\Auth\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,10 +19,23 @@ use App\Http\Controllers\UserController;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-Route::post('register', [UserController::class, 'register']);
-Route::post('login', [UserController::class, 'authenticate']);
+
+Route::group([
+    'prefix' => 'auth',
+], function () {
+    Route::post('login', [AuthController::class, 'authenticate']);
+    Route::post('register', [AuthController::class, 'register']);
+
+    Route::group([
+        'middleware' => 'jwt.verify'
+      ], function() {
+          Route::get('logout',  [AuthController::class, 'logout']);
+          Route::get('user', [AuthController::class, 'user']);
+      });
+});
 
 Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('user',[UserController::class, 'getAuthenticatedUser']);
     Route::resource('user', UserController::class);
+    Route::resource('product', ProductController::class);
 });

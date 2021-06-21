@@ -16,6 +16,7 @@ class UserController extends Controller
     {
         $this->repository = $repository;
     }
+
     public function index()
     {
         return $this->repository->all();
@@ -40,7 +41,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return response()->json([$this->repository->find($id)], 200);
+        return response()->json($this->repository->find($id), 200);
     }
 
     /**
@@ -64,21 +65,5 @@ class UserController extends Controller
     public function destroy($id)
     {
         response()->json($this->repository->destroy($id), 200);
-    }
-
-    public function authenticate(Request $request)
-    {
-        return response()->json($this->repository->authenticate($request), 200);
-    }
-
-    public function getAuthenticatedUser()
-    {
-        return response()->json($this->repository->getAuthenticatedUser(), 200);
-    }
-
-
-    public function register(Request $request)
-    {
-        return response()->json($this->repository->register($request), 201);
     }
 }

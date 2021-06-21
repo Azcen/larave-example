@@ -170,31 +170,4 @@ class UserControllerTest extends TestCase
 
         $this->assertDatabaseMissing('users', [ 'id' => $user->id ]);
     }
-
-    public function testRegisterUser() 
-    {
-        $this->withoutExceptionHandling();
-
-        $factory = $this->factory;
-        $factory['password'] = 'secret';
-        $factory['password_confirmation'] = 'secret';
-
-        $response = $this->withHeaders([])
-            ->json(
-                'POST',
-                '/api/register/',
-                $factory
-            )
-            ->assertStatus(201);
-        unset($factory['password']);
-        unset($factory['password_confirmation']);
-        unset($factory['email_verified_at']);
-        $response->assertJsonStructure([
-            'user' => [
-                'name',
-                'email',
-            ],
-            'token',
-        ]);
-    }
 }

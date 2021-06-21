@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class PermissionsTableSeeder extends Seeder
 {
@@ -47,7 +48,7 @@ class PermissionsTableSeeder extends Seeder
         $user = User::factory()->create([
             'name' => 'Alex',
             'email' => 'alex@test.com',
-            'password' => 'password',
+            'password' => Hash::make('password'),
         ]);
         // $user = User::find(1); //Admin
         $user->assignRole('Admin');
