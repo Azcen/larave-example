@@ -22,8 +22,9 @@ class AuthRepository implements AuthRepositoryInterface
         } catch (JWTException $e) {
             // return response()->json(['error' => 'could_not_create_token'], 500);
             return ['res' => ['error' => 'could_not_create_token'], 'code' => 500];
-          }
-        return ['res' => $token, 'code' => 200];
+        }
+        $user = Auth::user();
+        return ['res' => ['token' => $token, 'user' => $user], 'code' => 200];
     }
     
     public function getAuthenticatedUser() 
