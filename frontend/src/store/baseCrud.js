@@ -15,16 +15,16 @@ export default class {
         currentPage: 1,
         perPage: 5,
         totalUsers: 0,
-        totalPages: 0,
-      },
-    };
+        totalPages: 0
+      }
+    }
 
-    this.mutations = {};
+    this.mutations = {}
 
-    this.actions = {};
+    this.actions = {}
 
     this.getters = {
-      pagination: (state) => state.pagination,
-    };
+      pagination: (state) => state.pagination
+    }
   }
 }

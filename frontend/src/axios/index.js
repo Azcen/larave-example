@@ -7,6 +7,6 @@ Vue.use(VueAxios, axios)
 const baseUrl =
   process.env.NODE_ENV === 'production'
     ? window.Laravel.baseUrl
-    : 'http://laravel-example.test/api'
+    : 'http://laravel-example.test'
 
-Vue.axios.defaults.baseURL = baseUrl
+Vue.axios.defaults.baseURL = baseUrl + '/api'

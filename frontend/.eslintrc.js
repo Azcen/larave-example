@@ -1,27 +1,23 @@
 module.exports = {
   root: true,
   env: {
-    node: true,
+    node: true
   },
   extends: ['plugin:vue/essential', 'eslint:recommended', 'prettier'],
-  plugins: ['prettier'],
+  plugins: ['pug', 'html', 'prettier'],
   parserOptions: {
-    parser: 'babel-eslint',
+    parser: 'babel-eslint'
   },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    // "indent": ["warn", 2],
+    'comma-dangle': ['error', 'never'],
     // 'vue/html-indent': [
-    //   'warn',
+    //   'error',
     //   2,
     //   {
-    //     attribute: 1,
-    //     baseIndent: 1,
-    //     closeBracket: 0,
-    //     alignAttributesVertically: true,
-    //     ignores: [],
-    //   },
+    //     baseIndent: 1
+    //   }
     // ],
     // 'vue/script-indent': [
     //   'warn',
@@ -30,17 +26,17 @@ module.exports = {
     //     baseIndent: 1,
     //   },
     // ],
-    'prettier/prettier': ['error'],
+    'prettier/prettier': ['error']
   },
   overrides: [
     {
       files: [
         '**/__tests__/*.{j,t}s?(x)',
-        '**/tests/unit/**/*.spec.{j,t}s?(x)',
+        '**/tests/unit/**/*.spec.{j,t}s?(x)'
       ],
       env: {
-        jest: true,
-      },
-    },
-  ],
+        jest: true
+      }
+    }
+  ]
 }

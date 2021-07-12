@@ -1,6 +1,8 @@
 import Vue from 'vue'
+// import app from '../main'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import Login from '../views/Auth/Login.vue'
 
 Vue.use(VueRouter)
 
@@ -9,6 +11,13 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+    meta: { auth: true }
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    meta: { auth: false }
   },
   {
     path: '/about',
@@ -18,13 +27,17 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ '../views/About.vue'),
-  },
+    meta: { auth: true }
+  }
 ]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes,
+  routes
 })
+
+// It's required for VueAuth
+Vue.router = router
 
 export default router
